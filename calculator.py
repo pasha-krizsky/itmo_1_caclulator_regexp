@@ -67,16 +67,16 @@ def extract_operands(parts):
     return left_operand, right_operand
 
 
+
 def calculate_subexpression(expression):
     result = expression
 
-    subexpression_pattern = patterns.NUM + patterns.MLDV + patterns.NUM
+    subexpression_pattern = re.compile(patterns.NUM + patterns.MLDV + patterns.NUM)
     subexpression = re.search(subexpression_pattern, result)
 
     while subexpression is not None:
         subexpression_result = None
 
-        print(subexpression.group(0))
         if subexpression.group(0).find('*') != -1:
             subexpression_result = multiply(subexpression.group(0))
         else:
@@ -85,7 +85,7 @@ def calculate_subexpression(expression):
         result = result.replace(subexpression.group(0), (str(subexpression_result)))
         subexpression = re.search(subexpression_pattern, result)
 
-    subexpression_pattern = patterns.NUM + patterns.ADSB + patterns.NUM
+    subexpression_pattern = re.compile(patterns.NUM + patterns.ADSB + patterns.NUM)
     subexpression = re.search(subexpression_pattern, result)
 
     while subexpression is not None:

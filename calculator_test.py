@@ -1,6 +1,8 @@
 import unittest
 
 from calculator import *
+import timeit
+from random import random
 
 
 class CalculatorTest(unittest.TestCase):
@@ -63,6 +65,21 @@ class CalculatorTest(unittest.TestCase):
         expression = "1/0"
         calculate(expression)
 
+
+    def testPerformance(self):
+
+        ops = ["+", "-", "*", "/"]
+        res = ""
+        for i in range(0, 500):
+            res += str(random() * 1000 + 1)
+            res += ops[int(random() * 3)]
+        res += "1"
+
+        print("Start calc...")
+        a = timeit.default_timer()
+
+        calculate(res)
+        print(timeit.default_timer() - a)
 
 if __name__ == '__main__':
     unittest.main()
